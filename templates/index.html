@@ -18,18 +18,19 @@
       href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap"
       rel="stylesheet"
     />
-    <title>Hello !</title>
+    <title>Hello, {{ error }} !</title>
   </head>
 
   <body>
     <header class="header" id="inicio">
       <img src="static/img/hamburger.svg" alt="" class="hamburger" />
       <nav class="menu-navegacion">
+        <a href="/login">Login</a>
         <a href="#inicio">Inicio</a>
         <a href="#servicio">Servicios</a>
         <a href="#portafolio">Productos</a>
         <a href="#expertos">Ayuda</a>
-        <a href="#contacto">Contacto</a>
+        <a href="/logout">Logout</a>
       </nav>
       <div class="contenedor head">
         <h1 class="titulo">Borrego negro</h1>
@@ -105,7 +106,7 @@
     <footer id="contacto">
       <div class="contenedor footer-content">
         <div class="contact-us">
-          <h2 class="brand">Mercado</h2>
+          <h2 class="brand">{{error}}</h2>
           <p>Somos tu mejor opción</p>
         </div>
         <div class="social-media">
