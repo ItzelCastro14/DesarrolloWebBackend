@@ -54,8 +54,17 @@ def login():
         else:
             email = request.form["email"]
             password = request.form["password"]
-            session["email"] = email
-            return render_template("index.html", error=email)
+
+            try:
+                user= cuentas.find_one({"correo":(email)})
+                if(user!= None and user["contrasena"] == password):
+                    session["email"] = email
+                    return render_template("index.html", error=email)
+                else:
+                    return render_template("Login.html")
+
+            except Exception as e:
+                return "%s" % e
 
 @app.route('/logout')
 def logout():
