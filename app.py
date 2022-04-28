@@ -23,9 +23,10 @@ def home():
     email = None
     if "email" in session:
         email = session["email"]
-        return render_template('index.html', error=email)
+        usuario = cuentas.find_one({"correo": (email)})
+        return render_template('index.html', error=usuario)
     else:
-        return render_template('Login.html', error=email)
+        return render_template('Login.html')
 
 
 @app.route('/signup', methods=['POST'])
@@ -46,8 +47,10 @@ def signup():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     email = None    
-    if "email" in session:
-        return render_template('index.html', error=session["email"])
+    if "email" in session: 
+        email = session["email"]
+        usuario = cuentas.find_one({"correo": (email)})
+        return render_template('index.html', error=usuario)
     else:
         if (request.method == "GET"):
             return render_template("Login.html", error="email")
@@ -59,7 +62,8 @@ def login():
                 user= cuentas.find_one({"correo":(email)})
                 if(user!= None and user["contrasena"] == password):
                     session["email"] = email
-                    return render_template("index.html", error=email)
+                    usuario = cuentas.find_one({"correo": (email)})
+                    return render_template("index.html", error=usuario)
                 else:
                     return render_template("Login.html")
 
@@ -91,9 +95,10 @@ def insertUsers():
 
     try:
         cuentas.insert_one(user)
-        return redirect(url_for("usuarios"))
+        session["email"]= user["correo"]
+        return render_template("index.html",error=user)
     except Exception as e:
-        return "<p>El servicio no esta disponible =>: %s %s" % type(e), e
+        return "<p>El servicio no esta disponible =>: %s %s" % type(e), ec
 
 @app.route("/find_one/<matricula>")
 def find_one(matricula):
